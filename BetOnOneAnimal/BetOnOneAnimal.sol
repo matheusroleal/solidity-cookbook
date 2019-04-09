@@ -33,14 +33,15 @@ contract BetOnOneAnimal {
   }
 
   function winningAnimal() public view returns(int){
-    if(numBets > 100) return -1;
+    if(numBets < 100) return -1;
     if(randomNum == -1){
       randomNum = random();
     }
     return randomNum;
   }
 
-  function random() internal returns (int) {
-    return 21;
+  function random(uint seed) private view returns (uint) {
+    seed = (seed % 100) + 1
+    return seed
   }
 }
