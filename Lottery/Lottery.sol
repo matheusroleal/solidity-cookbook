@@ -33,7 +33,7 @@ contract Lottery {
     }));
   }
 
-  function getWinningNumber() public payable returns(
+  function setWinningNumber() public onlyOwner() returns(
     address _contractOwner,
     uint _LastNumSelected
   ) {
@@ -44,7 +44,7 @@ contract Lottery {
     );
   }
 
-  function getWinners() public onlyOwner() returns(uint _LastNumSelected) {
+  function sendMoneyToWinners() public onlyOwner() returns(uint _LastNumSelected) {
     for(uint p = 0; p < lottery.length; p++){
       address payable player = lottery[p].player;
       if(lottery[p].number == WinningNumber){
@@ -63,9 +63,11 @@ contract Lottery {
       emit sentPrize(totalPrize,idividualPrize);
     }
 
-    delete winningPlayers;
-
     return WinningNumber;
+  }
+
+  function getWinners() public view returns(address payable[] _winningPlayers) {
+    return winningPlayers;
   }
 
   function random(uint seed) private view returns (uint) {
