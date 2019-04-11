@@ -8,8 +8,9 @@ contract BetOnOneAnimal {
   }
 
   mapping(address => Bet) bets;
+  string[] animals = ["Avestruz", "Águia", "Burro","Borboleta","Cachorro","Cabra","Carneiro","Camelo","Cobra","Coelho","Cavalo","Elefante","Galo","Gato","Jacaré","Leão","Macaco","Porco","Pavão","Peru","Touro","Tigre","Urso","Veado","Vaca"];
   uint numBets = 0;
-  int randomNum = -1;
+  uint randomNum = 26;
 
   event changeSent(address player, uint change);
 
@@ -32,16 +33,21 @@ contract BetOnOneAnimal {
     _;
   }
 
-  function winningAnimal() public view returns(int){
-    if(numBets < 100) return -1;
-    if(randomNum == -1){
-      randomNum = random();
+  function getBet() public view returns(string memory _animalSelected){
+    Bet storage sender = bets[msg.sender];
+    return animals[sender.animal];
+  }
+
+  function setWinningAnimal() public returns(uint _animalSelected){
+    require(numBets > 100, "Minumum quantity of 100 bets");
+    if(randomNum == 26){
+      randomNum = random(block.timestamp);
     }
     return randomNum;
   }
 
   function random(uint seed) private view returns (uint) {
-    seed = (seed % 100) + 1
-    return seed
+    seed = (seed % 25);
+    return seed;
   }
 }
