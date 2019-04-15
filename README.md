@@ -3,10 +3,11 @@ Solidity Cookbook - Examples on how to code Solidity for Ethereum.
 
 ## Examples and Tutorials
 
-- [Lottery of 6 numbers game](./Lottery)
+- [Lottery Game of 6 numbers](./Lottery)
 - [Simple version of a bank system](./SimpleBank)
 - [A contract to store a value](./StoreValue)
 - [Lottery Game where you bet on animals](./BetOnOneAnimal)
+- [Donation contract](./Donation)
 
 # How to Test
 
