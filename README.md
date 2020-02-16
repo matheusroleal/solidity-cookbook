@@ -9,6 +9,7 @@ Solidity Cookbook - Examples on how to code Solidity for Ethereum.
 - [Lottery Game where you bet on animals](./BetOnOneAnimal)
 - [Transfer data ownership](./TransferData)
 - [Donation contract](./Donation)
+- [Store a value with access control system](./AccessControl)
 
 # How to Test
 
