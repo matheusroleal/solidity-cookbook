@@ -1,4 +1,5 @@
-pragma solidity ^0.6.1;
+pragma solidity ^0.5.3;
+pragma experimental ABIEncoderV2;
 
 contract StoreData {
 
@@ -9,26 +10,35 @@ contract StoreData {
     // Transaction data map
     mapping (string => string) private data;
     
-    function setTransaction(string memory data_to_send, string memory user_id) public returns(string memory){
-        // Concatenate sender and time in one string
-        string memory transaction_id = string(abi.encodePacked(user_id,Time_call()));
-        
-        // Add transaction info in maps
-        user_transaction[strConcat(user_id,transaction_id)] = true;
-        data[transaction_id] = data_to_send;
-        
-        // return the transaction id
-        return transaction_id;
+    //List of transaction_id
+    mapping (string => string) private transaction_id_list;
+
+    function setTransaction(string[] memory dataBulk, string memory user_id) public {
+        for(uint i = 0; i < dataBulk.length; i++){
+            string memory data_to_send = dataBulk[i];
+            
+            // Concatenate sender and time in one string
+            string memory transaction_id = strConcat(data_to_send,uint2str(Time_call()));
+            
+            // Add transaction info in maps
+            user_transaction[strConcat(user_id,transaction_id)] = true;
+            data[transaction_id] = data_to_send;
+            transaction_id_list[user_id] = strConcat(strConcat(transaction_id_list[user_id],","),transaction_id);
+        }
+    }
+    
+    function getTrasanctionIds(string memory user) public view returns (string memory){
+        return transaction_id_list[user];
     }
 
-    function getData(string memory tran_id, string memory user) public returns (string memory){
+    function getData(string memory tran_id, string memory user) public view returns (string memory){
         if(checkUser(user,tran_id) == true){
             return data[tran_id];
         }
         return "No Data Found For This Transaction";
     }
     
-    function checkUser(string memory user_id, string memory tran_id) internal returns (bool){
+    function checkUser(string memory user_id, string memory tran_id) internal view returns (bool){
         if (user_transaction[strConcat(user_id,tran_id)] == true){
             return true;
         } else if(admins[user_id]){
@@ -42,16 +52,33 @@ contract StoreData {
         return now;
     }
     
-    function strConcat(string memory _a, string memory _b) internal returns (string memory){
-	    bytes memory _ba = bytes(_a);
-	    bytes memory _bb = bytes(_b);
-	    string memory ab = new string(_ba.length + _bb.length);
-	    bytes memory bab = bytes(ab);
-	    uint k = 0;
-	    for (uint i = 0; i < _ba.length; i++) bab[k++] = _ba[i];
-	    for (uint i = 0; i < _bb.length; i++) bab[k++] = _bb[i];
-	    return string(bab);
-	}
+    function strConcat(string memory _s1, string memory _s2)internal pure returns (string memory _concatString){
+        bytes memory _s;
+
+        _s = abi.encodePacked(_s1);
+        _s = abi.encodePacked(_s, _s2);
+        
+        return string(_s);
+    }
+    
+	function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
+        if (_i == 0) {
+            return "0";
+        }
+        uint j = _i;
+        uint len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint k = len - 1;
+        while (_i != 0) {
+            bstr[k--] = byte(uint8(48 + _i % 10));
+            _i /= 10;
+        }
+        return string(bstr);
+    }
     
 
 }
