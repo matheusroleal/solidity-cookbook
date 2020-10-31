@@ -1,6 +1,9 @@
 # solidity-cookbook
 Solidity Cookbook - Examples on how to code Solidity for Ethereum.
 
+![Smart Contracts](https://www.aezion.com/wp-content/uploads/2020/06/SmartContracts-1080x675.png)
+
+
 ## Examples and Tutorials
 
 - [Lottery Game of 6 numbers](./Lottery)
@@ -10,6 +13,7 @@ Solidity Cookbook - Examples on how to code Solidity for Ethereum.
 - [Transfer data ownership](./TransferData)
 - [Donation contract](./Donation)
 - [Store a value with access control system](./AccessControl)
+- [Verifying Documents Through a Blockchain System](./ValidateData)
 
 # How to Test
 
