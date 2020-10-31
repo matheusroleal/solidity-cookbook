@@ -37,7 +37,7 @@ contract ValidateData {
      * @dev Validate data
      * @param newValidator address of new validator
      */
-    function validateFile(address newValidator) public isOwner {
+    function validateFile(address newValidator) public {
         validators.push(newValidator);
         validated[newValidator] = true;
     }
