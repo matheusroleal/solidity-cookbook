@@ -18,7 +18,7 @@ Ethereum is a decentralized platform capable of executing smart contracts and de
 - [Donation contract](./Donation)
 - [Store a value with access control system](./AccessControl)
 - [Verifying Documents Through a Blockchain System](./ValidateData)
-
+- [Non-fungible token](./NFT)
 # How to Test
 
 You can use Remix to test your contracts. This is a browser-only Solidity IDE and Runtime Environment. Access: https://remix.ethereum.org/
